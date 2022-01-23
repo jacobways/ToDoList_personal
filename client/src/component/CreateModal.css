@@ -1,0 +1,54 @@
+.create-wrapper > form {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+}
+
+.create-select {
+  font-size: 18px;
+}
+
+.create-wrapper {
+  color: #f7f7f7;
+  font-family: "Lato", sans-serif;
+  font-weight: 20;
+}
+
+.create-btn {
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  opacity: 0.8;
+  background-color: #fe2790;
+  border: 1px solid #fe2790;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.create-btn:after {
+  position: absolute;
+  transition: 0.3s;
+  content: "";
+  width: 0;
+  left: 50%;
+  bottom: 0;
+  height: 3px;
+  background: #f7f7f7;
+}
+
+.create-btn:hover {
+  cursor: pointer;
+}
+.create-btn:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+.create-btn:hover:nth-of-type(7) {
+  transform: scale(1.2);
+}
+.create-btn:hover:nth-of-type(7):after {
+  width: 0%;
+}

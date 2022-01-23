@@ -1,0 +1,49 @@
+.update-form {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.update-btn {
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  opacity: 0.8;
+  background-color: #fe2790;
+  border: 1px solid #fe2790;
+  text-align: center;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.update-btn:after {
+  position: absolute;
+  transition: 0.3s;
+  content: "";
+  width: 0;
+  left: 50%;
+  bottom: 0;
+  height: 3px;
+  background: #f7f7f7;
+}
+
+.update-btn:hover {
+  cursor: pointer;
+}
+.update-btn:hover:after {
+  width: 100%;
+  left: 0;
+}
+
+.update-btn:hover:nth-of-type(7) {
+  transform: scale(1.2);
+}
+.update-btn:hover:nth-of-type(7):after {
+  width: 0%;
+}
+
+.update-select {
+  font-size: 18px;
+}
