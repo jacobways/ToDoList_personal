@@ -7,7 +7,6 @@ function MyPage({ AccessToken, UserId }) {
 
   const changeListHandler = () => {
     // useEffect를 통해 list가 CRUD로 변경될 시 화면에 업데이트 시켜주기 위함
-    console.log("상태 변경");
     setChangeList(!changeList);
   };
   return (

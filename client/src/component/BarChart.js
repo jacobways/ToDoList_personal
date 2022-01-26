@@ -22,11 +22,10 @@ const BarChart = ({ UsersId, ToDoList, Token }) => {
 
   useEffect(() => {
     setAccessToken(Token);
-    console.log("Token", Token);
     // post 요청해서 로그인한 id,pw 보여주기 -> NavBar에 ~님 환영합니다
     axios
       .post(
-        "https://localhost:5000/user",
+        `${process.env.REACT_APP_SERVER_URL}/user`,
         {
           headers: {
             Cookie: `token=${AccessToken}`,
@@ -40,7 +39,7 @@ const BarChart = ({ UsersId, ToDoList, Token }) => {
       })
       .then(() => {
         // planned time 가져오기
-        axios.get(`https://localhost:5000/allTheme/${userId}`).then(res => {
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/allTheme/${userId}`).then(res => {
           console.log("userId", userId);
           console.log("res.data.allTheme", res.data.allTheme);
 
@@ -59,7 +58,7 @@ const BarChart = ({ UsersId, ToDoList, Token }) => {
 
             axios
               .get(
-                "https://localhost:5000/plannedTime",
+                `${process.env.REACT_APP_SERVER_URL}/plannedTime`,
                 { params: { userId: userId, theme: themeName } },
                 { withCredentials: true }
               )
@@ -77,7 +76,7 @@ const BarChart = ({ UsersId, ToDoList, Token }) => {
         });
 
         // feedback time 가져오기
-        axios.get(`https://localhost:5000/allTheme/${userId}`).then(res => {
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/allTheme/${userId}`).then(res => {
           console.log("userId", userId);
           console.log("res.data.allTheme", res.data.allTheme);
 
@@ -95,7 +94,7 @@ const BarChart = ({ UsersId, ToDoList, Token }) => {
 
             axios
               .get(
-                "https://localhost:5000/time",
+                `${process.env.REACT_APP_SERVER_URL}/time`,
                 { params: { userId: userId, theme: themeName } },
                 { withCredentials: true }
               )

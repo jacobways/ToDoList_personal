@@ -29,11 +29,11 @@ function LandingPage({ AccessToken }) {
 
   useEffect(() => {
     setToken(AccessToken);
-    // console.log(AccessToken);
+
     // post 요청해서 로그인한 id,pw 보여주기 -> NavBar에 ~님 환영합니다
     axios
       .post(
-        "https://localhost:5000/user",
+        `${process.env.REACT_APP_SERVER_URL}/user`,
         {
           headers: {
             Cookie: `token=${Token}`,
@@ -42,12 +42,10 @@ function LandingPage({ AccessToken }) {
         { withCredentials: true }
       )
       .then((res) => {
-        // console.log(res);
         setUserName(res.data.userInfo.username);
       });
 
-    axios.get("https://localhost:5000/alluser").then((res) => {
-      // console.log(res.data);
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/alluser`).then((res) => {
       setAllUser(res.data.allUser);
     });
   }, [UserName]);

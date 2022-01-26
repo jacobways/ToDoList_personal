@@ -72,7 +72,7 @@ function ToDoDeleteModal({ id, changeListHandler }) {
 
     axios
       .delete(
-        "https://localhost:5000/todo",
+        `${process.env.REACT_APP_SERVER_URL}/todo`,
         { params: { id } },
         {
           headers: { "Content-Type": "application/json" },
@@ -81,7 +81,6 @@ function ToDoDeleteModal({ id, changeListHandler }) {
       )
       .then(res => {
         changeListHandler();
-        console.log(res);
       })
       .catch(err => {
         console.log(err);

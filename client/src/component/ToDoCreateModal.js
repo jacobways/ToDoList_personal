@@ -33,12 +33,11 @@ function ToDoCreateModal({ date, userId, changeListHandler }) {
       date: date,
     };
     axios
-      .post("https://localhost:5000/todo", data, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/todo`, data, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then(res => {
-        console.log(res);
         changeListHandler();
       })
       .catch(err => {
@@ -51,8 +50,7 @@ function ToDoCreateModal({ date, userId, changeListHandler }) {
   // axios로 theme 불러와서 themename만 저장
 
   useEffect(() => {
-    axios.get(`https://localhost:5000/allTheme/${userId}`).then(res => {
-      console.log(res.data.allTheme);
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/allTheme/${userId}`).then(res => {
       let newNotToDoThemeName = [...ToDoThemeName];
       res.data.allTheme.forEach(theme => {
         newNotToDoThemeName.push(theme.name);
@@ -64,7 +62,6 @@ function ToDoCreateModal({ date, userId, changeListHandler }) {
   const ThemeHandler = e => {
     e.preventDefault();
     setTodoTheme(e.target.value);
-    // console.log(e.target.value);
   };
 
   return (

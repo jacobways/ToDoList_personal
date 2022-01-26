@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     axios
       .post(
-        "https://localhost:5000/user",
+        `${process.env.REACT_APP_SERVER_URL}/user`,
         {
           headers: {
             Cookie: `token=${AccessToken}`,
@@ -32,7 +32,6 @@ function App() {
       .then((res) => {
         // id 저장하고, 그 id로 다시 todo list post 요청
 
-        // console.log(res.data.userInfo);
         setUserId(res.data.userInfo.id);
       });
   }, [AccessToken]);
@@ -40,23 +39,21 @@ function App() {
   const ToDoListHandler = (id) => {
     axios
       .get(
-        "https://localhost:5000/todo",
+        `${process.env.REACT_APP_SERVER_URL}/todo`,
         { params: { userId: id, date: date } },
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data);
         setToDoList(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
         setToDoList(null);
       });
   };
   const NotToDoListHandler = (id) => {
     axios
       .get(
-        "https://localhost:5000/nottodo",
+        `${process.env.REACT_APP_SERVER_URL}/nottodo`,
         { params: { userId: id, date: date } },
         { withCredentials: true }
       )
@@ -64,7 +61,6 @@ function App() {
         setNotToDoList(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
         setNotToDoList(null);
       });
   };

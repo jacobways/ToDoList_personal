@@ -74,7 +74,7 @@ function NotToDoDeleteModal({ id, changeListHandler }) {
 
     axios
       .delete(
-        "https://localhost:5000/nottodo",
+        `${process.env.REACT_APP_SERVER_URL}/nottodo`,
         { params: { id } },
         {
           headers: { "Content-Type": "application/json" },
@@ -82,7 +82,7 @@ function NotToDoDeleteModal({ id, changeListHandler }) {
         }
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
       })
       .catch(err => {
         console.log(err);

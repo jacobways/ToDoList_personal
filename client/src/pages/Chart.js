@@ -12,11 +12,10 @@ function Chart({ UserId, ToDoList, AccessToken }) {
 
   useEffect(() => {
     setToken(AccessToken);
-    console.log("AccessToken", AccessToken);
     // post 요청해서 로그인한 id,pw 보여주기 -> NavBar에 ~님 환영합니다
     axios
       .post(
-        "https://localhost:5000/user",
+        `${process.env.REACT_APP_SERVER_URL}/user`,
         {
           headers: {
             Cookie: `token=${Token}`,
@@ -26,14 +25,13 @@ function Chart({ UserId, ToDoList, AccessToken }) {
       )
       .then(res => {
         setUsersId(res.data.userInfo.id);
-        // console.log(res);
       });
   }, []);
 
   useEffect(() => {
     // Theme name, Color 가져오기
     if (UserId !== 0) {
-      axios.get(`https://localhost:5000/allTheme/${UsersId}`).then(res => {
+      axios.get(`${process.env.REACT_APP_SERVER_URL}/allTheme/${UsersId}`).then(res => {
         let newLabels = [];
         let newColors = [];
         let newDatas = []; // 추가한 내용
@@ -47,12 +45,11 @@ function Chart({ UserId, ToDoList, AccessToken }) {
           // 서버 요청
           axios
             .get(
-              "https://localhost:5000/time",
+              `${process.env.REACT_APP_SERVER_URL}/time`,
               { params: { userId: UsersId, theme: theme } },
               { withCredentials: true }
             )
             .then(res => {
-              console.log(res.data.data);
               setTimeData([...timeData, res.data.data]); // 이걸로 수정
               // newDatas.push(res.data.data) // 추가한 부분
             })

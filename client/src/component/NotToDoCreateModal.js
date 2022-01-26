@@ -32,12 +32,11 @@ function NotToDoCreateModal({ date, userId, changeListHandler }) {
       date: date,
     };
     axios
-      .post("https://localhost:5000/nottodo", data, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/nottodo`, data, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then(res => {
-        console.log(res.data);
         changeListHandler();
       })
       .catch(err => {
@@ -47,19 +46,17 @@ function NotToDoCreateModal({ date, userId, changeListHandler }) {
   const ThemeHandler = e => {
     e.preventDefault();
     setNotTodoTheme(e.target.value);
-    // console.log(e.target.value);
   };
 
   // axios로 theme 불러와서 themename만 저장
 
   useEffect(() => {
     axios
-      .get(`https://localhost:5000/allTheme/${userId}`, {
+      .get(`${process.env.REACT_APP_SERVER_URL}/allTheme/${userId}`, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then(res => {
-        console.log(res.data.allTheme);
         let newNotToDoThemeName = [...NotToDoThemeName];
         res.data.allTheme.forEach(theme => {
           newNotToDoThemeName.push(theme.name);

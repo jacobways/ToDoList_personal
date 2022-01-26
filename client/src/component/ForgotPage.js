@@ -29,12 +29,11 @@ function ForgotPage() {
       question: Question,
     };
     axios
-      .post("https://localhost:5000/forgotpage", body, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/forgotpage`, body, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res.data.data);
         const password = res.data.data.password.password;
         // const question = res.data.data.password.question;
         // const username = res.data.data.password.username;

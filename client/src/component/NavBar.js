@@ -12,7 +12,7 @@ function NavBar({ AccessToken }) {
   useEffect(() => {
     axios
       .post(
-        "https://localhost:5000/user",
+        `${process.env.REACT_APP_SERVER_URL}/user`,
         {
           headers: {
             Cookie: `token=${AccessToken}`,
@@ -24,7 +24,6 @@ function NavBar({ AccessToken }) {
         setLogin("logout");
         setisLogin(true);
         // id 저장하고, 그 id로 다시 todo list post 요청
-        // console.log(res.data.userInfo);
       });
   }, []);
 
@@ -44,7 +43,7 @@ function NavBar({ AccessToken }) {
     } else if (Login === "logout") {
       axios
         .post(
-          "https://localhost:5000/logout",
+          `${process.env.REACT_APP_SERVER_URL}/logout`,
           {
             headers: {
               Cookie: "",
@@ -55,13 +54,11 @@ function NavBar({ AccessToken }) {
         .then((res) => {
           setisLogin(!isLogin);
           setLogin("login");
-          console.log(res.data);
         });
       // history.push("/");
       window.location.replace("/");
     }
 
-    console.log(Token);
   };
 
   return (

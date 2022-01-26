@@ -96,9 +96,8 @@ function NotToDoUpdateModal({ id, changeListHandler, UserId }) {
   };
 
   const getListInfo = () => {
-    console.log("get 요청 전 id", id);
     axios
-      .get(`https://localhost:5000/nottodo/${id}`, {
+      .get(`${process.env.REACT_APP_SERVER_URL}/nottodo/${id}`, {
         // userId가 아닌 id로 get 요청
         withCredentials: true,
       })
@@ -133,13 +132,12 @@ function NotToDoUpdateModal({ id, changeListHandler, UserId }) {
       date,
     };
     axios
-      .patch("https://localhost:5000/nottodo", data, {
+      .patch(`${process.env.REACT_APP_SERVER_URL}/nottodo`, data, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then(res => {
         changeListHandler();
-        console.log(res);
       })
       .catch(err => {
         console.log(err);
@@ -148,17 +146,15 @@ function NotToDoUpdateModal({ id, changeListHandler, UserId }) {
   const ThemeHandler = e => {
     e.preventDefault();
     setTheme(e.target.value);
-    // console.log(e.target.value);
   };
 
   useEffect(() => {
     axios
-      .get(`https://localhost:5000/allTheme/${userId}`, {
+      .get(`${process.env.REACT_APP_SERVER_URL}/allTheme/${userId}`, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then(res => {
-        console.log(res.data.allTheme);
         let newNotToDoThemeName = [...NotToDoThemeName];
         res.data.allTheme.forEach(theme => {
           newNotToDoThemeName.push(theme.name);

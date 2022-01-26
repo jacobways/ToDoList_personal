@@ -17,11 +17,10 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
 
   useEffect(() => {
     setToken(AccessToken);
-    // console.log(AccessToken);
     // post 요청해서 로그인한 id,pw 보여주기 -> NavBar에 ~님 환영합니다
     axios
       .post(
-        "https://localhost:5000/user",
+        `${process.env.REACT_APP_SERVER_URL}/user`,
         {
           headers: {
             Cookie: `token=${Token}`,
@@ -31,17 +30,14 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
       )
       .then(res => {
         setUsersId(res.data.userInfo.id);
-        console.log(res);
       });
   }, []);
 
   // 테마 한개가 추가될때
   useEffect(() => {
     if (UsersId !== 0) {
-      console.log(UsersId);
-      axios.get(`https://localhost:5000/allTheme/${UsersId}`).then(res => {
+      axios.get(`${process.env.REACT_APP_SERVER_URL}/allTheme/${UsersId}`).then(res => {
         if (res.data.allTheme[res.data.allTheme.length - 1]) {
-          console.log(res.data.allTheme);
           let newThemeColor = [...ThemeColor];
           newThemeColor.push(
             res.data.allTheme[res.data.allTheme.length - 1].color
@@ -62,8 +58,7 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
   // 처음 렌더링될때 테마 DB에서 가져오기
   useEffect(() => {
     if (UsersId !== 0) {
-      axios.get(`https://localhost:5000/allTheme/${UsersId}`).then(res => {
-        console.log(res.data.allTheme);
+      axios.get(`${process.env.REACT_APP_SERVER_URL}/allTheme/${UsersId}`).then(res => {
         let newThemeColor = [...ThemeColor];
         res.data.allTheme.forEach(theme => {
           newThemeColor.push(theme.color);
@@ -80,7 +75,7 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
 
     axios
       .get(
-        "https://localhost:5000/time",
+        `${process.env.REACT_APP_SERVER_URL}/time`,
         { params: { theme: ThemeName, userId: UsersId } },
         {
           headers: { "Content-Type": "application/json" },
@@ -88,7 +83,6 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
         }
       )
       .then(res => {
-        console.log(res);
         // 해당 데이터를 불러온후 start TIme, End Time을 통해 구한 시간을 pie Chart에 적용
       })
       .catch(err => {
@@ -111,30 +105,27 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
       name: Name,
       color: Color,
     };
-    console.log(body);
-    axios.post("https://localhost:5000/theme", body).then(res => {
-      console.log(res.data);
+
+    axios.post(`${process.env.REACT_APP_SERVER_URL}/theme`, body).then(res => {
+
       setThemeStatus(!ThemeStatus);
     });
   };
   const ColorHandler = e => {
-    // console.log(e.target.value);
     setColor(e.target.value);
   };
 
   const NameHandler = e => {
-    // console.log(e.target.value);
     setName(e.target.value);
   };
 
   const ThemeEditHandler = name => {
     axios
-      .get(`https://localhost:5000/getTheme/${name}`, {
+      .get(`${process.env.REACT_APP_SERVER_URL}/getTheme/${name}`, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then(res => {
-        console.log(res.data.editTheme);
         setDefaultName(res.data.editTheme.name);
       });
 
@@ -149,9 +140,6 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
   };
 
   const updateThemeHandler = () => {
-    console.log("초기 name", DefaultName);
-    console.log("업데이트 name", EditName);
-    console.log("업데이트 Color", EditColor);
 
     let data = {
       defaultname: DefaultName,
@@ -160,15 +148,13 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
     };
 
     axios
-      .patch("https://localhost:5000/updateTheme", data, {
+      .patch(`${process.env.REACT_APP_SERVER_URL}/updateTheme`, data, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then(res => {
         setThemeStatus(!ThemeStatus);
         changeListHandler();
-
-        console.log(res);
       })
       .catch(err => {
         console.log(err);
@@ -177,7 +163,7 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
   const deleteHandler = () => {
     axios
       .delete(
-        "https://localhost:5000/deletetheme",
+        `${process.env.REACT_APP_SERVER_URL}/deletetheme`,
         { params: { name: DefaultName } },
         {
           headers: { "Content-Type": "application/json" },
@@ -187,7 +173,6 @@ function Theme({ AccessToken, UserId, changeListHandler }) {
       .then(res => {
         setThemeStatus(!ThemeStatus);
         changeListHandler();
-        console.log(res);
       })
       .catch(err => {
         console.log(err);

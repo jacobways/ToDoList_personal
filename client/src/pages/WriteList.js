@@ -19,8 +19,6 @@ export default function WriteList({
   UserId,
   AccessToken,
 }) {
-  console.log("todo:", ToDoList);
-  console.log("nottodo", NotToDoList);
 
   //+ 메뉴 모달로 띄우기
   //모달안에 드롭다운으로 투두 낫투두
@@ -32,7 +30,6 @@ export default function WriteList({
 
   const changeListHandler = () => {
     // useEffect를 통해 list가 CRUD로 변경될 시 화면에 업데이트 시켜주기 위함
-    console.log("상태 변경");
     setChangeList(!changeList);
   };
 
@@ -40,7 +37,7 @@ export default function WriteList({
     // 날짜가 바뀔 때마다 ToDoList 및 NotToDoList 데이터 최신화
     axios
       .post(
-        "https://localhost:5000/user",
+        `${process.env.REACT_APP_SERVER_URL}/user`,
         {
           headers: {
             Cookie: `token=${AccessToken}`,
@@ -50,7 +47,6 @@ export default function WriteList({
       )
       .then(res => {
         // id 저장하고, 그 id로 다시 todo list post 요청
-        // console.log(res.data.userInfo);
         ToDoListHandler(res.data.userInfo.id);
         NotToDoListHandler(res.data.userInfo.id);
       });

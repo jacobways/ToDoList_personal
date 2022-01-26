@@ -34,17 +34,15 @@ function Register() {
         question: Question,
       };
       axios
-        .post("https://localhost:5000/register", body, {
+        .post(`${process.env.REACT_APP_SERVER_URL}/register`, body, {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         })
         .then((res) => {
-          // console.log(res.data);
           alert("회원가입이 완료되었습니다.");
           history.push("/login");
         });
-      // console.log("id", Id);
-      // console.log("password", Password);
+
     }
   };
   const moveLogin = () => {

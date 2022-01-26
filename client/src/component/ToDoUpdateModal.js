@@ -100,9 +100,8 @@ function ToDoUpdateModal({ id, changeListHandler, UserId }) {
   };
 
   const getListInfo = () => {
-    console.log("get 요청 전 id", id);
     axios
-      .get(`https://localhost:5000/todo/${id}`, {
+      .get(`${process.env.REACT_APP_SERVER_URL}/todo/${id}`, {
         // userId가 아닌 id로 get 요청
         withCredentials: true,
       })
@@ -137,13 +136,12 @@ function ToDoUpdateModal({ id, changeListHandler, UserId }) {
       date,
     };
     axios
-      .patch("https://localhost:5000/todo", data, {
+      .patch(`${process.env.REACT_APP_SERVER_URL}/todo`, data, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then(res => {
         changeListHandler();
-        console.log(res);
       })
       .catch(err => {
         console.log(err);
@@ -152,12 +150,11 @@ function ToDoUpdateModal({ id, changeListHandler, UserId }) {
 
   useEffect(() => {
     axios
-      .get(`https://localhost:5000/allTheme/${userId}`, {
+      .get(`${process.env.REACT_APP_SERVER_URL}/allTheme/${userId}`, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then(res => {
-        console.log(res.data.allTheme);
         let newToDoThemeName = [...ToDoThemeName];
         res.data.allTheme.forEach(theme => {
           newToDoThemeName.push(theme.name);

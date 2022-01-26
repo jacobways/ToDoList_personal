@@ -29,19 +29,15 @@ function Login({ TokenSave }) {
       password: Password,
     };
     axios
-      .post("https://localhost:5000/login", body, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/login`, body, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res.data.data.accessToken);
         setAccessToken(res.data.data.token);
         TokenSave(res.data.data.token);
         history.push("/");
       });
-
-    console.log("id", Id);
-    console.log("password", Password);
   };
   const moveRegister = () => {
     history.push("/register");

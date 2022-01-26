@@ -12,11 +12,10 @@ function ChangePassword({ AccessToken }) {
   let history = useHistory();
   useEffect(() => {
     setToken(AccessToken);
-    // console.log(AccessToken);
     // post 요청해서 로그인한 id,pw 보여주기 -> NavBar에 ~님 환영합니다
     axios
       .post(
-        "https://localhost:5000/user",
+        `${process.env.REACT_APP_SERVER_URL}/user`,
         {
           headers: {
             Cookie: `token=${Token}`,
@@ -25,7 +24,6 @@ function ChangePassword({ AccessToken }) {
         { withCredentials: true }
       )
       .then(res => {
-        // console.log(res.data);
         setUserInfo(res.data.userInfo);
       });
   }, []);
@@ -52,17 +50,15 @@ function ChangePassword({ AccessToken }) {
   };
   const ChangePasswordHandler = e => {
     e.preventDefault();
-    // console.log(NewPassword);
     let body = {
       userId: UserInfo.id,
       password: NewPassword,
     };
     axios
-      .post("https://localhost:5000/changepassword", body, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/changepassword`, body, {
         withCredentials: true,
       })
       .then(res => {
-        // console.log(res.data);
         if (res.data.message) {
           history.push("/login");
         }

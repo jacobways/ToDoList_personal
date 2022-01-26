@@ -21,10 +21,9 @@ export default function ShowList({
   AccessToken,
 }) {
   useEffect(() => {
-    console.log(UserId);
     axios
       .post(
-        "https://localhost:5000/user",
+        `${process.env.REACT_APP_SERVER_URL}/user`,
         {
           headers: {
             Cookie: `token=${AccessToken}`,
@@ -33,13 +32,11 @@ export default function ShowList({
         { withCredentials: true }
       )
       .then(res => {
-        // console.log(res.data.userInfo);
         ToDoListHandler(res.data.userInfo.id);
         NotToDoListHandler(res.data.userInfo.id);
         // id 저장하고, 그 id로 다시 todo list post 요청
       });
   }, []);
-  console.log(ToDoList);
 
   function simpleTime(time) {
     //시-분-초 형태로 된 시간 데이터를 시-분으로 간단히 변경하기 위한 함수
